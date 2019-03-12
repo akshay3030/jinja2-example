@@ -1,0 +1,14 @@
+hostname {{ name }}
+
+interface Loopback1
+ip address 10.1.1.{{ id }} 255.255.255.255
+
+{% for vlan, name in vlans.items() %}
+vlan {{ vlan }}
+ name {{ name }}
+{% endfor -%}
+
+router bgp {{ id }}
+{% for neigh in bgp %}
+ neighbor {{ neigh.neighbor }} remote-as {{ neigh.remote }}
+{% endfor %}
